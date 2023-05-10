@@ -1,3 +1,4 @@
+/node_modules
 /vendor
 .env
 .env.backup
@@ -11,3 +12,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/public/uploads
