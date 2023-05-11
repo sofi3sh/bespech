@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\RegionController;
 use App\Http\Controllers\Api\CvEmployee\CvEmployeeController;
 use App\Http\Controllers\HomeWork\HomeworkController;
+use App\Http\Controllers\Api\Content\AdminWhyModuleController;
 
 
 /*
@@ -31,36 +32,49 @@ use App\Http\Controllers\HomeWork\HomeworkController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('login', [AuthController::class, 'signin'])->name('login');
-Route::post('register', [AuthController::class, 'signup'])->name('register');
-
-
-Route::get('categories', [CategoryController::class, 'index']);
-Route::get('category', [CategoryController::class, 'show']);
-Route::get('config', [VersionController::class, 'index']);
-
-Route::get('language', [LanguageController::class, 'index']);
-Route::apiResource('users',UsersController::class);
-Route::get('homeWork',[HomeworkController::class, 'index']);
-Route::post('homeWork',[HomeworkController::class, 'addHomeWorkTiket']);
-Route::get('homeWorkFile',[HomeworkController::class, 'getHomeWorkFile']);
-Route::post('homeWorkFile',[HomeworkController::class, 'addHomeWorkFile']);
 
 
 
-Route::apiResource('profileEducation',EducationController::class);
-Route::apiResource('profileEmployee', EmployeeController::class);
-Route::apiResource('profileCompany', CompanyController::class);
-Route::apiResource('vacancy', VacancyController::class);
-Route::apiResource('isSaved', IssavedController::class);
+
+//Route::post('login', [AuthController::class, 'signin'])->name('login');
+//Route::post('register', [AuthController::class, 'signup'])->name('register');
+//
+//
+//Route::get('categories', [CategoryController::class, 'index']);
+//Route::get('category', [CategoryController::class, 'show']);
+//Route::get('config', [VersionController::class, 'index']);
+//
+//Route::get('language', [LanguageController::class, 'index']);
+//Route::apiResource('users',UsersController::class);
+//Route::get('homeWork',[HomeworkController::class, 'index']);
+//Route::post('homeWork',[HomeworkController::class, 'addHomeWorkTiket']);
+//Route::get('homeWorkFile',[HomeworkController::class, 'getHomeWorkFile']);
+//Route::post('homeWorkFile',[HomeworkController::class, 'addHomeWorkFile']);
+//
+//
+//
+//Route::apiResource('profileEducation',EducationController::class);
+//Route::apiResource('profileEmployee', EmployeeController::class);
+//Route::apiResource('profileCompany', CompanyController::class);
+//Route::apiResource('vacancy', VacancyController::class);
+//Route::apiResource('isSaved', IssavedController::class);
+//
+//
+//Route::apiResource('filterParams', FilterParamsController::class);
+//Route::apiResource('userFilter', UserFilterConrtoller::class);
+//
+//Route::apiResource('employeeCv', CvEmployeeController::class);
+//Route::apiResource('region', RegionController::class);
+//Route::apiResource('city', CityController::class);
 
 
-Route::apiResource('filterParams', FilterParamsController::class);
-Route::apiResource('userFilter', UserFilterConrtoller::class);
+/* AndriiDev */
 
-Route::apiResource('employeeCv', CvEmployeeController::class);
-Route::apiResource('region', RegionController::class);
-Route::apiResource('city', CityController::class);
+
+Route::get('/whymodule/{id?}', [AdminWhyModuleController::class, 'index']);
+Route::put('/whymodule/{id}', [AdminWhyModuleController::class, 'update']);
+
+
 
 
 
