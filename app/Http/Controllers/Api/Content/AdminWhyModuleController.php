@@ -22,6 +22,7 @@ class AdminWhyModuleController extends Controller
      */
     public function index(Request $request, $id = null)
     {
+        //комент
         $whymodules = AdminWhyModule::with('advantages')->get();
 
         $result = $whymodules->map(function ($item) {
