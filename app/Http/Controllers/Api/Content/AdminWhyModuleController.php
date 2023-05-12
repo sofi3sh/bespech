@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Content\AdminWhyModule;
 use App\Models\Content\Advantages;
+use App\Models\Content\AdminWhyModuleAdvantages;
+
+
 
 class AdminWhyModuleController extends Controller
 {
@@ -19,14 +22,17 @@ class AdminWhyModuleController extends Controller
      */
     public function index(Request $request, $id = null)
     {
+        //комент
         $whymodules = AdminWhyModule::with('advantages')->get();
 
         $result = $whymodules->map(function ($item) {
             return [
+                'id' => $item->id,
                 'title' => $item->title,
                 'text' => $item->text,
                 'advantages' => $item->advantages->map(function ($advantage) {
                     return [
+                        'id' => $advantage->id,
                         'text' => $advantage->name
                     ];
                 })
@@ -66,7 +72,24 @@ class AdminWhyModuleController extends Controller
      */
     public function show($id)
     {
-        //
+        $whymodule = AdminWhyModule::with('advantages')->find($id);
+
+        if (!$whymodule) {
+            return response()->json('Данних не знайденно', 404);
+        }
+
+        $result = [
+            'id' => $whymodule->id,
+            'title' => $whymodule->title,
+            'text' => $whymodule->text,
+            'advantages' => $whymodule->advantages->map(function ($advantage) {
+                return [
+                    'id' => $advantage->id,
+                    'text' => $advantage->name
+                ];
+            })
+        ];
+        return response()->json($result, 200);
     }
 
     /**
@@ -88,20 +111,30 @@ class AdminWhyModuleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-            $adminWhyModule = AdminWhyModule::findOrFail($id);
-            // Оновити поля title та text
-            $adminWhyModule->title = $request->input('title');
-            $adminWhyModule->text = $request->input('text');
-            $adminWhyModule->save();
-            // Оновити пов'язані записи в таблиці advantages
-            $advantages = $request->input('advantages');
+        $adminWhyModule = AdminWhyModule::findOrFail($id);
+        // Оновити поля title та text
+        $adminWhyModule->title = $request->input('title');
+        $adminWhyModule->text = $request->input('text');
+        $adminWhyModule->save();
+
+        // Оновити пов'язані записи в таблиці advantages
+        $advantages = $request->input('advantages');
+
+        if ($advantages && is_array($advantages)) {
             // Видалити всі пов'язані записи
             $adminWhyModule->advantages()->detach();
+
             // Додати нові пов'язані записи
             foreach ($advantages as $advantage) {
-                $adminWhyModule->advantages()->attach($advantage['id']);
+                $advantageModel = Advantages::create([
+                    'name' => $advantage['name']
+                ]);
+
+                $adminWhyModule->advantages()->attach($advantageModel->id);
             }
-            return response()->json('Дані успішно оновленні', 200);
+        }
+
+        return response()->json('Дані успішно оновлені', 200);
     }
 
     /**
@@ -112,6 +145,6 @@ class AdminWhyModuleController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }

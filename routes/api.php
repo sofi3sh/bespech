@@ -72,7 +72,10 @@ use App\Http\Controllers\Api\Content\AdminWhyModuleController;
 
 
 Route::get('/whymodule/{id?}', [AdminWhyModuleController::class, 'index']);
-Route::put('/whymodule/{id}', [AdminWhyModuleController::class, 'update']);
+Route::get('/whymodule/show/{id}', [AdminWhyModuleController::class, 'show']);
+Route::put('/whymodule/update/{id}', [AdminWhyModuleController::class, 'update']);
+
+
 
 
 
