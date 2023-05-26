@@ -1,26 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\Content\PartnersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\Api\CategoryController;
-use App\Http\Controllers\Api\VersionController;
-use App\Http\Controllers\Api\LanguageController;
-use App\Http\Controllers\Api\ProfileController;
-use App\Http\Controllers\Api\EducationController;
-use App\Http\Controllers\Api\EmployeeController;
-use App\Http\Controllers\Api\CompanyController;
-use App\Http\Controllers\Api\VacancyController;
-use App\Http\Controllers\Api\IssavedController;
-use App\Http\Controllers\Api\FilterParamsController;
-use App\Http\Controllers\Api\UserFilterConrtoller;
-use App\Http\Controllers\Api\CityController;
-use App\Http\Controllers\Api\RegionController;
-use App\Http\Controllers\Api\CvEmployee\CvEmployeeController;
-use App\Http\Controllers\HomeWork\HomeworkController;
 use App\Http\Controllers\Api\Content\AdminWhyModuleController;
-
+use App\Http\Controllers\Api\Content\PatrnersModule;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,61 +19,27 @@ use App\Http\Controllers\Api\Content\AdminWhyModuleController;
 
 
 
-
-//Route::post('login', [AuthController::class, 'signin'])->name('login');
-//Route::post('register', [AuthController::class, 'signup'])->name('register');
-//
-//
-//Route::get('categories', [CategoryController::class, 'index']);
-//Route::get('category', [CategoryController::class, 'show']);
-//Route::get('config', [VersionController::class, 'index']);
-//
-//Route::get('language', [LanguageController::class, 'index']);
-//Route::apiResource('users',UsersController::class);
-//Route::get('homeWork',[HomeworkController::class, 'index']);
-//Route::post('homeWork',[HomeworkController::class, 'addHomeWorkTiket']);
-//Route::get('homeWorkFile',[HomeworkController::class, 'getHomeWorkFile']);
-//Route::post('homeWorkFile',[HomeworkController::class, 'addHomeWorkFile']);
-//
-//
-//
-//Route::apiResource('profileEducation',EducationController::class);
-//Route::apiResource('profileEmployee', EmployeeController::class);
-//Route::apiResource('profileCompany', CompanyController::class);
-//Route::apiResource('vacancy', VacancyController::class);
-//Route::apiResource('isSaved', IssavedController::class);
-//
-//
-//Route::apiResource('filterParams', FilterParamsController::class);
-//Route::apiResource('userFilter', UserFilterConrtoller::class);
-//
-//Route::apiResource('employeeCv', CvEmployeeController::class);
-//Route::apiResource('region', RegionController::class);
-//Route::apiResource('city', CityController::class);
-
-
 /* AndriiDev */
 
 
-Route::get('/whymodule/{id?}', [AdminWhyModuleController::class, 'index']);
-Route::put('/whymodule/{id}', [AdminWhyModuleController::class, 'update']);
+Route::get('/why-module', [AdminWhyModuleController::class, 'index']); // метод виводу Всього
+
+Route::get('/admin-why-module-advantages', [AdminWhyModuleController::class, 'getAdvantagesWithNames']); // метод виводу преваг
+Route::post('/advantages', [AdminWhyModuleController::class, 'storeAdvantage']); // метод додає переваги в табличку
+Route::put('/advantages/{id}', [AdminWhyModuleController::class, 'updateAdvantage']); //редагує переваги
+Route::delete('/advantages/{id}', [AdminWhyModuleController::class, 'deleteAdvantage']); // видаляє переваги
 
 
+Route::resource( '/admin-partners', PartnersController::class);
 
 
-
-
-
-
-// Route::get('profileEducation', [EducationController::class, 'index']);
-// Route::get('profileEmployee', [EmployeeController::class, 'index']);
-// Route::get('profileCompany', [CompanyController::class, 'index']);
-
-// Route::patch('updateProfileEducation', [EducationController::class, 'update']);
-// Route::patch('updateProfileEmployee', [EmployeeController::class, 'update']);
-// Route::patch('updateProfileCompany', [CompanyController::class, 'update']);
-
-
+// //login Routes...
+Route::get('login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
+Route:: post('login', 'App\Http\Controllers\AuthController@signin')->name('signin');
+Route::post('logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+// //Registration Routes...
+Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@getCategory')->name('register');
+Route::post('/register', 'App\Http\Controllers\AuthController@signup')->name('register');//signup
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

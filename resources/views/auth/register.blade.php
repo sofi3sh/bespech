@@ -17,7 +17,7 @@
                          <select name="category_id">
                               <option value="">{{ __('register.category_select') }}</option>
                                 @foreach($categoriesDescriptionArr as $categoryDescription)
-                                    <option value="{{$categoryDescription->category_id}}">{{$categoryDescription->description}}</option>
+                                    <option value="{{$categoryDescription->categoryId}}">{{$categoryDescription->description}}</option>
                                 @endforeach
                             </select>
 

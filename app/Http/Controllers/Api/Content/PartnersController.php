@@ -1,53 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Content;
 
+use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Profile;
 
-class ProfileController extends Controller
+class PartnersController extends BaseController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-
-        $header = $request->header;
-        
-        $token = $request->header('token');
-        $api_key = $request->header('api-key');
-      //  dd($token,  $api_key);
-       
-        
-        if($api_key == "d4d12fb2a814682bbdc0cba801cb5919edf1273a61007d82ca0bf331c59d7986"){
-        $profiles = Profile::all();
-        
-        $response = [
-            'response'=>[
-                 'success' => true,
-                 'profiles'=>[
-                     'localizationId' => 1, // id мови укр
-                      'data'  => $profiles,
-                     ]
-                ]
-        ];
-        
-        return response()->json($response, 200);
-        
-        } else {
-             $response = [
-            'response'=>[
-                 'success' => false,
-                 'error' => 404
-                ]
-        ];
-            
-            return response()->json($response, 404);
-        }
+        dd(111);
     }
 
     /**
@@ -68,7 +36,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd(123);
     }
 
     /**
