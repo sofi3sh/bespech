@@ -6,20 +6,7 @@ use App\Http\Controllers\Controller as Controller;
 
 class BaseController extends Controller
 {
-    /**
-     * success response method.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function sendResponse($result, $message)
-    {
-    	$response = [
-            'success' => true,
-            'data'    => $result,
-            'message' => $message,
-        ];
-        return response()->json($response, 200);
-    }
+
     /**
      * return error response.
      *
@@ -42,7 +29,7 @@ class BaseController extends Controller
             return false;
         }
     }
-    
+
     public function validateUserToken($userId, $categoryId = 0, $correctCategoryId = 0){
         // dd($userId);
         $categoryId = $categoryId ? $categoryId->category_id : 0;
@@ -62,9 +49,19 @@ class BaseController extends Controller
             return false;
         }
     }
-    
-    
-    public function bindMesages(){
+
+    public function validateRules(): array{
+        return $messages = [
+            'authorization'=>[
+                'categoryId' => ['required'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'password_confirmation' => 'required|same:password',
+            ]
+        ];
+    }
+
+    public function bindMessages(): array{
         return $messages = [
             'name.required' => "The name field is empty",
             'lastName.required' => "The lastName field is empty",
@@ -74,104 +71,20 @@ class BaseController extends Controller
             'age.max' => "The age field exceeds 99",
             'email.required' => "The email field is empty",
             'email.email' => "Email field entered is incorrect",
+            'email.unique' => "Email is already in used",
+            'password_confirmation.same' => "Passwords do not match",
             'address.required' => "The address field is empty",
             'phone.required' => 'The phone field is empty',
             'phone.numeric' => 'The phone field must contain only numbers',
             'phone.digits_between' => 'The phone field must contain 10-12 digits',
+
         ];
     }
 
-    /**
-     * return error response.
-     *
-     * @return \Illuminate\Http\Response
-     */
-     
-    public function sendValidationErrorDelete($error, $errorMessages = [], $code = 422){
-    	$response = [
-    	   // 'response'=>[
-    	        'success' => false,
-                'error'=> $code,
-                'message' => $error,
-    	   // ]
-	        
-        ];
-        if(!empty($errorMessages)){
-            $errorMessages = json_decode(json_encode($errorMessages), true);
-         
-         $srt_error = '';
-         foreach ($errorMessages as $values){
-             foreach ($values as $value){
-                 $srt_error .= $value.'. ';
-             }
-         }
-         $response['info'] =  $srt_error;
-            
-        }
+
+    public function sendResponce($response, $code){
         return response()->json($response, $code);
     }
-    
-    public function sendValidationError($error, $errorMessages = [], $code = 422){
-    	$response = [
-    	    'response'=>[
-    	        'success' => false,
-                'error'=> $code,
-                'message' => $error,
-    	    ]
-        ];
-        if(!empty($errorMessages)){
-            $errorMessages = json_decode(json_encode($errorMessages), true);
-         
-         $srt_error = '';
-         foreach ($errorMessages as $values){
-             foreach ($values as $value){
-                 $srt_error .= $value.'. ';
-             }
-         }
-         $response['response']['info'] = $srt_error;
-            
-        }
-        return response()->json($response, $code);
-    }
-    
-    //delete
-    public function tokenNotFound($errorMessage = 'incorrect token', $code = 404){
-        $response = [
-    	    'response'=>[
-    	        'message'=>$errorMessage,
-                'success' => false,
-                'error' => $code
-            ]
-    	];
-    	
-    	return response()->json($response, $code);
-    }
-    //delete
-    
-    //delete
-    public function tokenDoesNotBelongToThisCategory($errorMessage = 'token does not belong to this category', $code = 404){
-    	$response = [
-    	    'response'=>[
-    	        'message'=>$errorMessage,
-                'success' => false,
-                'error' => $code
-            ]
-    	];
-    	return response()->json($response, $code);
-    }
-    //delete
-    
-    //delete
-    public function invalidApiKey($errorMessage = 'incorrect api-key', $code = 404){
-    	$response = [
-    	    'response'=>[
-    	        'message'=>$errorMessage,
-                'success' => false,
-                'error' => $code
-            ]
-    	];
-    	return response()->json($response, $code);
-    }
-    //delete
+
 }
 
