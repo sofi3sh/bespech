@@ -27,17 +27,17 @@ Route::get('/doc-api', 'App\Http\Controllers\Doc\DocapiController@index');
 // Auth::routes();
 
 Route::get('index', 'LocalizationController@index');
-Route::get('change/lang', 'LocalizationController@lang_change')->name('LangChange');
+Route::get('change/lang', 'LocalizatioController@lang_change')->name('LangChange');
 
 
-// Route::get('login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login'); 
-// Route:: post('login', 'App\Http\Controllers\AuthController@signin')->name('signin');
-// Route::post('logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout'); 
+ Route::get('login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
+ Route:: post('login', 'App\Http\Controllers\AuthController@signin')->name('signin');
+ Route::post('logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 
 // //Registration Routes...
-// Route::get('register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register'); 
-// Route::post('register', 'App\Http\Controllers\AuthController@signup')->name('register');//signup
+ Route::get('register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
+ Route::post('register', 'App\Http\Controllers\AuthController@signup')->name('register');//signup
 
 
 
