@@ -20,15 +20,12 @@ class AuthController extends BaseController
 
     public function signin(Request $request)
     {
-
         $this->middleware('guest')->except('logout');
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
 
             $authUser = Auth::user();
-            $success['token'] = $authUser->createToken('api-key')->plainTextToken;
-            $success['name'] = $authUser->name;
-            $usering = DB::table('personal_access_tokens')->where('tokenable_id', Auth::user()->id)->value('token');
+            $accessToken = $authUser->createToken('token_name')->plainTextToken;
 
 
             $response = [
@@ -38,11 +35,11 @@ class AuthController extends BaseController
                         'localizationId' => 1,
                         'data' => $authUser,
                     ]
-                ]
+                ],
+                'access_token' => $accessToken,
             ];
 
             return response()->json($response, 200);
-
 
         } else {
             $response = [
@@ -51,11 +48,8 @@ class AuthController extends BaseController
                     'error' => 404
                 ]
             ];
-
             return response()->json($response, 404);
         }
-
-
     }
 
 
