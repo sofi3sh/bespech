@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\CvEmployee;
+namespace App\Models\ApiHandBooks\Language;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EmployeesCvFile extends Model
+class Language extends Model
 {
     use HasFactory;
 }

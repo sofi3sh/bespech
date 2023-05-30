@@ -10,7 +10,7 @@ class Advantages extends Model
 {
     use HasFactory;
     protected $table = 'advantages';
-
+    public $timestamps = false;
     protected $fillable = [
         'Id',
         'name'
