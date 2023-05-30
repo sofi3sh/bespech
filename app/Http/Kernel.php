@@ -23,6 +23,8 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
+
+
     /**
      * The application's route middleware groups.
      *
@@ -42,6 +44,7 @@ class Kernel extends HttpKernel
     \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
     'throttle:api',
     \Illuminate\Routing\Middleware\SubstituteBindings::class,
+          \App\Http\Middleware\HandleApiErrors::class,
 ],
     ];
 
